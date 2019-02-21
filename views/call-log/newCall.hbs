@@ -1,0 +1,7 @@
+
+<label for ="">Printer</label>
+<select name="printer">
+{{#each printerFromDB}}
+    <option value={{this._id}}>{{this.printer}}</option>
+{{/each}}
+</select>
