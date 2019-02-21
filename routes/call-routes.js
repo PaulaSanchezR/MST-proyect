@@ -17,5 +17,13 @@ callRouter.get('/newCallog' , (req,res,next) => {
     
 })
 
+callRouter.post('/addlog' , (req,res,next) => {
+    Calls.create(req.body)
+    .then(newlog => {
+        console.log("new ===" , newlog);
+    })
+    .catch(err => next(err))
+})
+
 module.exports = callRouter;
 
