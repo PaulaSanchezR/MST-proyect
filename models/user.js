@@ -5,6 +5,7 @@ const Schema   = mongoose.Schema;
 const userSchema = new Schema({
         username : String,
         password : String
+        //privilage : ['admin','repre' ]
     },{
         timestamps: {createdAt:"created_at",updateAt:"update_at"}
     });

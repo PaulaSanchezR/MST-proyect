@@ -15,12 +15,12 @@ const LocalStrategy     = require('passport-local').Strategy;
 
 
 const User = require("./models/user");
+const passportSetup = require('./config/passport/passport-setup');
 
 
 
-
-// Mongoose configuration
-mongoose.Promise = Promise;
+// ====================== Mongoose configuration
+//mongoose.Promise = Promise;
 mongoose
   .connect('mongodb://localhost/mst-proyect', {useNewUrlParser: true})
   .then(x => {
@@ -35,7 +35,7 @@ const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.
 
 const app = express();
 
-// Middleware Setup
+// =========================== Middleware Setup
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -56,27 +56,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 
+// =============== REGISTER THE PARTIALS:
+hbs.registerPartials(__dirname + '/views/partials');
 
-// default value for title local
+// =============== default value for title local
 app.locals.title = 'MST-APP';
 
 
 
-const index = require('./routes/index');
-app.use('/', index);
-
-const authRoutes = require("./routes/auth-routes");
-app.use('/' , authRoutes);
 
 
-const callRoutes = require("./routes/call-routes");
-app.use('/' , callRoutes);
-
-
-
+// ============= SESSION
 //****** configure the middleware ****** */
 //****** first of all we have to configure */
-// *** the express-session *****/
+// ***  the express-session *****/
 app.use(session({
   //secret key it will use to be generated
   secret: "our-passport-local-strategy-app",
@@ -84,45 +77,22 @@ app.use(session({
   saveUninitialized: true
 }));
 
-
-//three methods that passport needs to work. these methods 
-//the Strategy this include error control
-passport.serializeUser((user, cb) => {
-  cb(null, user._id);
-});
-
-passport.deserializeUser((id, cb) => {
-  User.findById(id, (err, user) => {
-    if (err) { return cb(err); }
-    cb(null, user);
-  });
-});
-
-passport.use(new LocalStrategy((username, password, next) => {
-  User.findOne({ username }, (err, user) => {
-    if (err) {
-      return next(err);
-    }
-    if (!user) {
-      return next(null, false, { message: "Incorrect username" });
-    }
-    if (!bcrypt.compareSync(password, user.password)) {
-      return next(null, false, { message: "Incorrect password" });
-    }
-
-    return next(null, user);
-  });
-}));
-
-//****************************************************** */
-//********initialize passport and passport session******** */
-//******************************************************** */
-app.use(passport.initialize());
-app.use(passport.session());
+// =============== MUST COME AFTER THE SESSION
+passportSetup(app);
 
 
 
+// ========= ROUTES MIDDLEWARE
 
 
+const index = require('./routes/index');
+app.use('/', index);
+app.use('/' , require('./routes/auth-routes'));
+app.use('/', require('./routes/call-routes'));
+     // another way to create the routes
+//const callRoutes = require("./routes/call-routes");
+//app.use('/' , callRoutes);
+//const authRoutes = require("./routes/auth-routes");
+//app.use('/' , authRoutes);
 
 module.exports = app;

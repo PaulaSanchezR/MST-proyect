@@ -53,7 +53,7 @@ authRoutes.post("/signup", (req, res, next) => {
     })
   });
   
-//***********LOGIN****** */
+//=====================LOGIN ================
 
 // the get has not secret, we have to load the view we will use
 authRoutes.get("/login", (req, res, next) => {
@@ -61,7 +61,7 @@ authRoutes.get("/login", (req, res, next) => {
   });
 // the post will containt the passport funcionality  
   authRoutes.post("/login", passport.authenticate("local", {
-    successRedirect: "/",
+    successRedirect: "/newCallog",
     failureRedirect: "/login",
     failureFlash: true,
     passReqToCallback: true
