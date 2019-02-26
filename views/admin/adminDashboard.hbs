@@ -1,1 +1,24 @@
 <h1>Welcome Admin</h1>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Last Name</th>
+    <th>Usernamme</th>
+    <th>Privilage</th>
+    <th>Active</th>
+    <th>Edit</th>
+
+  </tr>
+{{#each listUser}}
+  <tr>
+    <th>{{this.name}}</th>
+    <th>{{this.lastName}}</th>
+    <th>{{this.username}}</th>
+    <th>{{this.privilage}}</th>
+    <th>{{this.active}}</th>
+    <form action ="/edit/{{this._id}}" method="POST">  
+     <th><button type="submit">Edit</button></th>
+   </form>
+  </tr>
+{{/each}}
+</table>

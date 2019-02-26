@@ -13,13 +13,18 @@ const User    = require('../models/user');
 callRouter.get('/newCallog' , isLoggedIn,(req,res,next) => {
   Printer.find() // I need the printer to list on my form
   .then(printerFromDB => {
-
-      Calls.find()
+      let newDate = new Date();
+      newDate.setHours(0,0,0,0);
+     // console.log("========== Data", printerFromDB);
+     console.log("date", newDate.toString())
+      Calls.find({representative:req.user._id , createdAt:{
+          $gte: newDate.toISOString()
+      }})
       .populate('representative')
       .populate('printer')
       .then(callsFromDB =>{
-          console.log("printer1", printerFromDB);
-          console.log("calls1", callsFromDB);
+          //console.log("printer1", printerFromDB);
+          //console.log("calls1", callsFromDB);
           res.render('call-log/newCall', {printerFromDB , callsFromDB});
       })
       .catch(err => next(err))
@@ -30,6 +35,7 @@ callRouter.get('/newCallog' , isLoggedIn,(req,res,next) => {
 })
 
 callRouter.post('/newCallog' , isLoggedIn,(req,res,next) => {
+    console.log('hit!')
     Calls.create({
         representative  : req.user._id,
         printer         : req.body.printer,
@@ -62,5 +68,17 @@ function isLoggedIn(req, res, next){
         res.redirect('/login');
     }
 }
+
+
+//=============================DELETE=====
+
+callRouter.post('/delete/:id', (req,res,next)=>{
+    Calls.findByIdAndRemove(req.params.id)
+    .then(deleteOneCall =>{
+            console.log("delete 11111", deleteOneCall);
+            res.redirect('/newCallog');
+    })
+    .catch()
+})
 module.exports = callRouter;
 
