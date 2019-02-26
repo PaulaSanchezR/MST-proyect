@@ -87,8 +87,10 @@ passportSetup(app);
 
 const index = require('./routes/index');
 app.use('/', index);
-app.use('/' , require('./routes/auth-routes'));
+
+app.use('/', require('./routes/auth-routes'));
 app.use('/', require('./routes/call-routes'));
+app.use('/', require('./routes/admin-routes'));
      // another way to create the routes
 //const callRoutes = require("./routes/call-routes");
 //app.use('/' , callRoutes);

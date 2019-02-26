@@ -3,9 +3,12 @@ const Schema   = mongoose.Schema;
 
 
 const userSchema = new Schema({
-        username : String,
-        password : String
-        //privilage : ['admin','repre' ]
+        username : {type: String},
+        password : {type: String},
+        name : {type: String},
+        lastName:{type:String},
+        privilage : {type: String, enum:['admin','repre'], default:'repre'},
+        active : {type: Boolean, default:'true'}
     },{
         timestamps: {createdAt:"created_at",updateAt:"update_at"}
     });

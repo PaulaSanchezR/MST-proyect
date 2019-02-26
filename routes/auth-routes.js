@@ -61,17 +61,45 @@ authRoutes.get("/login", (req, res, next) => {
   });
 // the post will containt the passport funcionality  
   authRoutes.post("/login", passport.authenticate("local", {
-    successRedirect: "/newCallog",
-    failureRedirect: "/login",
-    failureFlash: true,
-    passReqToCallback: true
-  }));
+      failureRedirect: '/login'
+      }), (req, res) => {
+        console.log("====",req.user.active);
+        console.log("====",req.user.privilage);
 
-// ********************PRIVATE PAGE ******
+        if (req.user.privilage ==="admin") {
+          res.redirect('/dashboard');
+        }
+        else if (req.user.active === true || req.user.privilage ==="repre") {
+          res.redirect('/newCallog');
+        }
+        
+      });
+
+
+
+
+    /*failureRedirect: "/login",
+    successRedirect: "/newCallog",
+    failureFlash: true,
+    passReqToCallback: true*/
+
+
+
+  //}));
+
+// =====================PRIVATE PAGE =======
 
 authRoutes.get("/private-page", ensureLogin.ensureLoggedIn(), (req, res) => {
     res.render("private", { user: req.user });
   });
+
+
+// ====================LOGOUT===========
+authRoutes.get("/logout" , (req,res) =>{
+  req.session.destroy((err) => {
+    res.redirect("/login");
+  })
+})  
 
 
 module.exports = authRoutes;
