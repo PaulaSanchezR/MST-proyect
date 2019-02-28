@@ -1,23 +1,23 @@
 <h2>Signup</h2>
 
-<form action="/edit" method="POST" id="form-container">
+<form action="/{{findUser._id}}/update" method="POST" id="form-container">
   <label for="">Username: {{findUser.username}}</label>
   <br><br>
-  <label for="">Password</label>
-  <input id="password" type="password" name="password" placeholder="Your password">
-   <br>
   <label for="">Privalages</label>
-  <select name="privilages">
-    <option value="{{findUser.privilage}}" selected>{{findUser.privilage}}</option>
+  <select name="privilage">
+    <option value="{{findUser.privilage}}">{{findUser.privilage}}</option>
     <option value="repre" >repre</option>
     <option value="admin" >admin</option>
   </select>
   <br>
-  <label for= "active">Activate</label>
+  <label for= "">Activate</label>
   <select name="active">
-    <option value="{{findUser.active}}" selected>{{findUser.active}}</option>
-    <option value="true" >true</option>
+    
+    <option value="{{findUser.active}}">{{findUser.active}}</option>
     <option value ="false">false</option>
+  
+    <option value="true" >true</option>
+   
   </select>
 
   {{#if message}}

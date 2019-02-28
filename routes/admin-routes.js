@@ -27,9 +27,21 @@ adminRouter.post('/edit/:idUser', (req,res,next)=>{
 })
 
 adminRouter.post('/:idUpdate/update', (req,res,next) =>{
-  User.findByIdAndUpdate({
+  //const {privalage,active} = req.body;
+  //User.update ({})
+  User.findByIdAndUpdate(req.params.idUpdate, req.body)
+  .then(updateUser => {
+      //console.log("user update  ====",updateUser);
+      User.find()
+       .then(listUser => {
+        console.log("user update  ***",listUser);
+        res.render('admin/adminDashboard', {listUser});
+      })
+      .catch(err => console.log("Error listing the user"))
     
   })
+  .catch(err => console.log("Error update User", err))
+
 })
 
 

@@ -69,7 +69,7 @@ authRoutes.get("/login", (req, res, next) => {
         if (req.user.privilage ==="admin") {
           res.redirect('/dashboard');
         }
-        else if (req.user.active === true || req.user.privilage ==="repre") {
+        else if (req.user.active === true && req.user.privilage ==="repre") {
           res.redirect('/newCallog');
         }
         
