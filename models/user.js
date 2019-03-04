@@ -3,8 +3,11 @@ const Schema   = mongoose.Schema;
 
 
 const userSchema = new Schema({
-        username : {type: String},
-        password : {type: String},
+        email: {type: String, require: true},
+        username : {type: String, require:true},
+        password : {type: String, require:true},
+        resetPasswordToken:{type:String},
+        resetPassordExpires: {type: Date},
         name : {type: String},
         lastName:{type:String},
         privilage : {type: String, enum:['admin','repre'], default:'repre'},

@@ -1,79 +1,129 @@
 
-<h1>STAR MICRONICS</h1>
-<div><h1>Welcome {{currentUser.username}}</h1></div>
-<form  action="/newCallog" method="POST">
-    <select name="printer">
-        {{#each printerFromDB}}
-            <option value={{this._id}}>{{this.printer}}</option>
-        {{/each}}
-    </select>
-    <label for="">Interface</label>
-    <select name="interface">
-        <option value="Lan">Lan</option>
-        <option value="USB">USB</option>
-        <option value="WIFI">WIFI</option>
-        <option value="Bluetooth">Bluetooth</option>
-        <option value="CloudPRNT">CloudPRNT</option>
-        <option value="WebPRNT">WebPRNT</option>
-    </select>
-    <label for="">Device</label>
-    <select name="device">
-        <option value="Windows">Windows</option>
-        <option value="Mac">Mac</option>
-        <option value="iOS">iOS</option>
-        <option value="Android">Android</option>
-        <option value="Linux">Linux</option>
-    </select>
-    <label for ="">POs</label>
-    <select name="pos">
-        <option value="None">None</option>
-        <option value="Square">Square</option>
-        <option value="Uber Eats">Uber Eats</option>
-        <option value="Touch Bistro">Touch Bistro</option>
-        <option value="LightSpeed">Android</option>
-        <option value="Quickbooks">Quickbooks</option>
-        <option value="Mindbody">Mindbody</option>
-        <option value="Shopify">Shopify</option>
-        <option value="Vend">Vend</option>
-        <option value="ForUP">Uber Eats</option>
-        <option value="GrubHub">Touch Bistro</option>
-        <option value="Vagaro">Vagaro</option>
-        <option value="Millennium">Millennium</option>
-        <option value="Booker">Booker</option>
-        <option value="Rain POS">Rain POS</option>
-        <option value="Postmates">Vend</option>
-        <option value="Lavu">Lavu</option>
-        <option value="Opentable">Opentable</option>
-        <option value="ChowNow">ChowNow</option>
-        <option value="MJ Freeway">MJ Freeway</option>
-        <option value="DoorDash">DoorDash</option>
-        <option value="PayTrace">PayTrace</option>
-        <option value="Salon Touch">Salon Touch</option>
-        <option value="Adello">Adello</option>
-        <option value="Clover">Clover</option>
-        <option value="New">NEW</option>
-    </select>
-    <label for="">Observation</label> 
-    <input type="text" name="observation" value="" >
-    <div>
-        <button type="submit">Submit</button>
+<div class="container">
+
+    <div class="row">
+
+      <div class="col-lg-8 col-lg-offset-2">
+
+        
+        <form id="contact-form" action="/newCallog" method="POST" role="form">
+
+        <div class="messages"></div>
+
+        <div class="controls">
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="form_name">Printer *</label>
+                <select name="printer" class="form-control">
+                    {{#each printerFromDB}}
+                        <option value= {{this._id}}>{{this.printer}}</option>
+                    {{/each}}
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="form_lastname">Interface *</label>
+                <select name="interface" class="form-control">
+                    <option value="Lan">Lan</option>
+                    <option value="USB">USB</option>
+                    <option value="WIFI">WIFI</option>
+                    <option value="Bluetooth">Bluetooth</option>
+                    <option value="CloudPRNT">CloudPRNT</option>
+                    <option value="WebPRNT">WebPRNT</option>
+                 </select>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="form_email">Device *</label>
+                    <select name="device" class="form-control">
+                        <option value="Windows">Windows</option>
+                        <option value="Mac">Mac</option>
+                        <option value="iOS">iOS</option>
+                        <option value="Android">Android</option>
+                        <option value="Linux">Linux</option>
+                    </select>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="form_phone">POS</label>
+                <select name="pos" class="form-control">
+                    <option value="None">None</option>
+                    <option value="Square">Square</option>
+                    <option value="Uber Eats">Uber Eats</option>
+                    <option value="Touch Bistro">Touch Bistro</option>
+                    <option value="LightSpeed">Android</option>
+                    <option value="Quickbooks">Quickbooks</option>
+                    <option value="Mindbody">Mindbody</option>
+                    <option value="Shopify">Shopify</option>
+                    <option value="Vend">Vend</option>
+                    <option value="ForUP">Uber Eats</option>
+                    <option value="GrubHub">Touch Bistro</option>
+                    <option value="Vagaro">Vagaro</option>
+                    <option value="Millennium">Millennium</option>
+                    <option value="Booker">Booker</option>
+                    <option value="Rain POS">Rain POS</option>
+                    <option value="Postmates">Vend</option>
+                    <option value="Lavu">Lavu</option>
+                    <option value="Opentable">Opentable</option>
+                    <option value="ChowNow">ChowNow</option>
+                    <option value="MJ Freeway">MJ Freeway</option>
+                    <option value="DoorDash">DoorDash</option>
+                    <option value="PayTrace">PayTrace</option>
+                    <option value="Salon Touch">Salon Touch</option>
+                    <option value="Adello">Adello</option>
+                    <option value="Clover">Clover</option>
+                    <option value="New">NEW</option>
+                </select>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="form_message">Message *</label>
+                <textarea id="form_message" name="observation" class="form-control" placeholder="Observation *" rows="4" required data-error="Please, Add the description."></textarea>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <input type="submit" class="btn btn-success btn-send" value="Submit">
+            </div>
+          </div>
+         
+        </div>
+
+        </form>
+
+      </div>
+
     </div>
-</form>
+
+  </div>
 <br>
 <br>
 <br>
 <hr>
-<table>
+<table id="customers" class="col-lg-8 col-lg-offset-2">
     <tr>
         <h2>
-            <th>Date</th>
-            <th>Username</th>
-            <th>Printer</th>
-            <th>Interface</th>
-            <th>Device</th>
+            <th>DATE</th>
+            <th>USERNAME</th>
+            <th>PRINTER</th>
+            <th>INTERFACE</th>
+            <th>DEVICE</th>
             <th>POS</th>
-            <th>Observation</th>
-            <th>Delete</th>
+            <th>OBSERVATION</th>
+            <th>DELETE</th>
         </h2>
     </tr>
 

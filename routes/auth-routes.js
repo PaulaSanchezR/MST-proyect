@@ -19,6 +19,9 @@ authRoutes.get("/signup", (req,res,next) =>{
 authRoutes.post("/signup", (req, res, next) => {
     const username = req.body.username;
     const password = req.body.password;
+    const email = req.body.email;
+    const name = req.body.name;
+    const lastName = req.body.lastName;
   
     if (username === "" || password === "") {
       res.render("auth/signup", { message: "Indicate username and password" });
@@ -37,14 +40,17 @@ authRoutes.post("/signup", (req, res, next) => {
   
       const newUser = new User({
         username,
-        password: hashPass
+        password: hashPass,
+        email,
+        name,
+        lastName
       });
   
       newUser.save((err) => {
         if (err) {
           res.render("auth/signup", { message: "Something went wrong" });
         } else {
-          res.redirect("/");
+          res.redirect("/login");
         }
       });
     })

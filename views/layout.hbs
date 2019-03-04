@@ -5,22 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>{{title}}</title>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,400,700'>
   <link rel="stylesheet" href="/stylesheets/style.css" />
 </head>
 <body>
 <nav>
-  <ul>
-    {{#if currentUser}}
-         <div><a href="/logout">SIGN OUT</a></div>
-         
-    {{else}}
-    <li><a href="/login">LOGIN</a></li>
-    <li><a href="/signup">SING IN</a></li>
-    {{/if}}
-  </ul>
-</nav>
-  {{{body}}}
+  <img src="/images/star.png" width="350px" height="100px">
 
+    {{#if currentUser}}
+         <div class="inf-bar">Welcome {{currentUser.username}}</div>
+         <div class="inf-bar"><a href="/logout">SIGN OUT</a></div>
+    {{/if}}
+  
+</nav>
+<hr>
+{{#if currentUser.privilage}}
+<div class="col-sm-2">
+  <div>Reports</div>
+  <div>User</div>
+</div>
+<div class="col-sm-10">
+  {{{body}}}
+</div>
+{{else}}
+<div>{{currentUser.privilage}}</div>
+ {{{body}}}
+
+{{/if}}
+  <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>
+  <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js'></script>
   <script src="/javascripts/script.js"></script>
 </body>
-</html>
+</html> 
