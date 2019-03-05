@@ -1,29 +1,51 @@
-<h2>Signup</h2>
+<div class="container">
 
-<form action="/{{findUser._id}}/update" method="POST" id="form-container">
-  <label for="">Username: {{findUser.username}}</label>
-  <br><br>
-  <label for="">Privalages</label>
-  <select name="privilage">
-    <option value="{{findUser.privilage}}">{{findUser.privilage}}</option>
-    <option value="repre" >repre</option>
-    <option value="admin" >admin</option>
-  </select>
-  <br>
-  <label for= "">Activate</label>
-  <select name="active">
-    
-    <option value="{{findUser.active}}">{{findUser.active}}</option>
-    <option value ="false">false</option>
-  
-    <option value="true" >true</option>
-   
-  </select>
+<div class="row" style="margin-top:20px">
+    <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+		<form role="form" action="/{{findUser._id}}/update" method="POST">
+			<fieldset>
+				<h2>Username: {{findUser.username}}</h2>
+				<hr class="colorgraph">
+				 <div class="col-md-12">
+              <div class="form-group">
+                <label for="form_privilage">Privalages</label>
+                <select name="privilage" class="form-control form-control-lg">
+                    <option value="{{findUser.privilage}}">{{findUser.privilage}}</option>
+                    <option value="repre" >repre</option>
+                    <option value="admin" >admin</option>
+                 </select>
+            </div>
+          </div>
+      	 <div class="col-md-12">
+              <div class="form-group">
+                <label for="form_activate">Activate</label>
+                <select name="active" class="form-control form-control-lg">
+                   <option value="{{findUser.active}}">{{findUser.active}}</option>
+                   <option value ="false">false</option>
+                   <option value="true" >true</option>
+                 </select>
+              </div>
+          </div>
+          <hr class="colorgraph">
+        	<div class="col-md-12 ">
+             {{> flashMessage}} 
+             {{!-- this the name of the partial file--}}
+              <input type="submit" class="btn btn-lg btn-success btn-block" value="EDIT">
+					</div>
+				
+        {{#if message}}
+            <div class="error-message">{{ message }}</div>
+       {{/if}}
+			</fieldset>
+		</form>
+	</div>
+</div>
 
-  {{#if message}}
-    <div class="error-message">{{ message }}</div>
-  {{/if}}
-  <br><br>
+</div>
 
-  <button>Edit account</button>
-</form>
+
+
+
+
+
+
