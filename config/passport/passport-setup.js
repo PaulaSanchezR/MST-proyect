@@ -51,6 +51,7 @@ function passportBasicSetup(pass){
   pass.use((req,res,next) => {
     res.locals.messages = req.flash();
     if(req.user){
+      //res.locals.isAdmin = "admin";
       res.locals.currentUser = req.user;
       //                        |
       //     make currentUser variable available in all hbs 

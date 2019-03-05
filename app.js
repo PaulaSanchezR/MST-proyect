@@ -21,8 +21,10 @@ const passportSetup = require('./config/passport/passport-setup');
 
 // ====================== Mongoose configuration
 //mongoose.Promise = Promise;
-mongoose
-  .connect('mongodb://localhost/mst-proyect', {useNewUrlParser: true})
+//                        KEY 
+//                         |
+mongoose          
+  .connect(process.env.MONGODB_URI, {useNewUrlParser: true})
   .then(x => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
   })
