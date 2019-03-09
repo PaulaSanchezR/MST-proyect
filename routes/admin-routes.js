@@ -32,16 +32,37 @@ adminRouter.post('/edit/:idUser', (req,res,next)=>{
 adminRouter.post('/:idUpdate/update', (req,res,next) =>{
   //const {privalage,active} = req.body;
   //User.update ({})
-  User.findByIdAndUpdate(req.params.idUpdate, req.body)
+  User.findById(req.params.idUpdate)
+  //User.findByIdAndUpdate(req.params.idUpdate, req.body)
+  
   .then(updateUser => {
-      //console.log("user update  ====",updateUser);
-      User.find()
-       .then(listUser => {
-        console.log("user update  ***",listUser);
-        res.render('admin/adminDashboard', {listUser});
-      })
-      .catch(err => console.log("Error listing the user"))
-    
+    console.log("privilages ===" ,req.body.privilage )
+          temPrivi= false;
+          if (req.body.privilage ==="admin"){
+            temPrivi = true;
+          }else {
+            temPrivi = false;
+          }
+          updateUser.set({
+            active : req.body.active,
+            privilage: req.body.privilage,
+            privi: temPrivi
+
+          })
+          
+        updateUser.save((err) => {
+          if (err){
+            res.render("admin/editUser", {message:"Something went wrong updating the user"})
+          } else{
+              console.log("user update  ====",updateUser);
+              User.find()
+              .then(listUser => {
+                //console.log("user update  ***",listUser);
+                res.render('admin/adminDashboard', {listUser});
+              })
+              .catch(err => console.log("Error listing the user"))
+            }
+        });
   })
   .catch(err => console.log("Error update User", err))
 
@@ -67,26 +88,29 @@ adminRouter.post('/search/date' , (req,res,next) =>{
   endDate2= new Date(req.body.endDate)
   const printer= req.body.printer;
   //console.log(" req.body.starDate======", starDate1.toISOString() )
-  if(printer === 'false')
-  {
-    Calls.find({createdAt:{"$gte": starDate1.toISOString() ,"$lt" : endDate2.toISOString()}})
-      .then(callLog =>{
-          console.log("calls ===", callLog);
-          res.render('admin/searchReport', {callLog})
-      }) 
-      .populate('representative')
-      .populate('printer')
-      .catch(error => next(err))
-  }else {
-    Calls.find({printer, createdAt:{"$gte": starDate1.toISOString() ,"$lt" : endDate2.toISOString()}})
-      .then(callLog =>{
-          console.log("with printer ===", callLog);
-      }) 
-      .populate('representative')
-      .populate('printer')
-      .catch(error => next(err))
-  }
-
+  Printer.find()
+  .then(printerFromDB => {
+      
+  
+      if(printer === 'false')
+      {
+        Calls.find({createdAt:{"$gte": starDate1.toISOString() ,"$lt" : endDate2.toISOString()}})
+          .then(callLog =>{
+              console.log("calls ===", callLog);
+              res.render('admin/searchReport', {callLog})
+          }) 
+          .catch(error => next(err))
+      }else {
+        Calls.find({printer, createdAt:{"$gte": starDate1.toISOString() ,"$lt" : endDate2.toISOString()}})
+          .then(callLog =>{
+              console.log("with printer ===", callLog);
+          }) 
+          .populate('representative')
+          .populate('printer')
+          .catch(error => next(err))
+      }
+  })
+  .catch()
  
 
 })

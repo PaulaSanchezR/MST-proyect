@@ -43,7 +43,8 @@ authRoutes.post("/signup", (req, res, next) => {
         password: hashPass,
         email,
         name,
-        lastName
+        lastName,
+        privi:false
       });
   
       newUser.save((err) => {

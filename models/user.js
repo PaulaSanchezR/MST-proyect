@@ -11,6 +11,7 @@ const userSchema = new Schema({
         name : {type: String},
         lastName:{type:String},
         privilage : {type: String, enum:['admin','repre'], default:'repre'},
+        privi: false,
         active : {type: Boolean, default:'true'}
     },{
         timestamps: {createdAt:"created_at",updateAt:"update_at"}
