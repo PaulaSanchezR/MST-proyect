@@ -15,30 +15,74 @@
   <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script> jQuery -->
    
 </head>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
 <body>
 <nav>
+
+  <div class="col-md-2 container-fluid">
   <img src="/images/star.png" width="350px" height="100px">
-
-    {{#if currentUser}}
-         <div class="inf-bar">Welcome {{currentUser.username}}</div>
-         <div class="inf-bar"><a href="/logout">SIGN OUT</a></div>
-    {{/if}}
-  
+  </div>
+   {{#if currentUser}}
+      <div class="col-md-10">
+                            <div class="header-rightside">
+                                   <ul class="list-inline header-top pull-right">
+                                      <li>Welcome {{currentUser.username}}</li>
+                                      <li class="hidden-xs"><a href="/logout" class="add-project" data-toggle="modal" data-target="#add_project">SIGN OUT</a></li>
+                                   </ul>
+                            </div>
+      </div>
 </nav>
-<hr>
-{{#if currentUser.privi}}
-<div class="col-sm-2">
-  <div><a href="/reports">Reports</a></div>
-  <div><a href="/users">User</a></div>
+<div class="col-md-12">
+  <hr class="hr">
 </div>
-<div class="col-sm-10">
-  {{{body}}}
-</div>
-{{else}}
-<div>{{currentUser.privilage}}</div>
- {{{body}}}
 
-{{/if}}
+
+ <div class="container-fluid display-table">
+        <div class="row display-table-row">
+            <div class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box" id="navigation">
+                
+                <div class="navi">
+                    <ul>
+                      {{#if currentUser.privi}}
+                        <li><a href="/reports"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Reports</span></a></li>
+                        <li><a href="/dashboard"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Users</span></a></li>
+                        <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm"></span></a></li>
+                        <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm"></span></a></li>
+                        <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i><span class="hidden-xs hidden-sm"></span></a></li>
+                      {{else}}
+                        <li><a href="/reports"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Service Centers</span></a></li>
+                        <li><a href="/users"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm"></span></a></li>
+                        <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm"></span></a></li>
+                        <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm"></span></a></li>
+                        <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i><span class="hidden-xs hidden-sm"></span></a></li>
+                      {{/if}}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-10 col-sm-11 display-table-cell v-align">
+                <!--<button type="button" class="slide-toggle">Slide Toggle</button> -->
+                <div class="row">
+                   
+                </div>
+                <div class="user-dashboard">
+                  {{!--if currentUser.privi--}}
+                   {{{body}}}
+                  {{!--else--}}
+                    
+                  </div>
+                   
+
+                   {{!--/if--}}
+                    
+                </div>
+            </div>
+        </div>
+        
+  {{else}}
+      {{{body}}}   
+  {{/if}}  
+
   <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js'></script>
   <script src="/javascripts/script.js"></script>

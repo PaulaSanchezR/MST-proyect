@@ -84,31 +84,40 @@ adminRouter.get('/reports', (req,res,next)=>{
 
 //db.posts.find({"created_on": {"$gte": start, "$lt": end}})
 adminRouter.post('/search/date' , (req,res,next) =>{
-  starDate1= new Date(req.body.starDate);
-  endDate2= new Date(req.body.endDate)
-  const printer= req.body.printer;
+  const starDate1= new Date(req.body.starDate) || null;
+  const endDate2= new Date(req.body.endDate) || null;
+  const interface= req.body.interface || null;
+  const device =req.body.device || null;
+  const pos    =req.body.pos || null;
+  const printer= req.body.printer || null;
+  const infArray=[starDate1,endDate2,interface,device,pos,printer];
   //console.log(" req.body.starDate======", starDate1.toISOString() )
+  console.log("search printer===",printer);
   Printer.find()
-  .then(printerFromDB => {
-      
-  
-      if(printer === 'false')
+  .then(listPrinter => {
+    // console.log("printer ===",listPrinter);
+     
+      /*if(printer === 'false')
       {
         Calls.find({createdAt:{"$gte": starDate1.toISOString() ,"$lt" : endDate2.toISOString()}})
           .then(callLog =>{
-              console.log("calls ===", callLog);
-              res.render('admin/searchReport', {callLog})
+              //console.log("calls ===", callLog);
+              res.render('admin/searchReport', {callLog, listPrinter})
           }) 
           .catch(error => next(err))
-      }else {
-        Calls.find({printer, createdAt:{"$gte": starDate1.toISOString() ,"$lt" : endDate2.toISOString()}})
-          .then(callLog =>{
-              console.log("with printer ===", callLog);
-          }) 
+      }else {*/
+        Calls.find({$or: [{device:device}, {printer:printer},{pos:pos},{interface:interface},{createdAt:{"$gte": starDate1.toISOString() ,"$lt" : endDate2.toISOString()}}]})
+        //Calls.find({:printer, createdAt:{"$gte": starDate1.toISOString() ,"$lt" : endDate2.toISOString()}})
           .populate('representative')
           .populate('printer')
-          .catch(error => next(err))
-      }
+          .then(callLog =>{
+            console.log("array==, ", infArray);
+            //console.log("with printer ===", callLog);
+              res.render('admin/searchReport', {callLog, listPrinter,infArray})
+          }) 
+          //,interface,device,pos,endDate2
+          .catch(err => next(err))
+      //}
   })
   .catch()
  

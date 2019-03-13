@@ -1,17 +1,13 @@
 
-<div class="container">
 
-    <div class="row">
-
-      <div class="col-lg-8 col-lg-offset-2">
-
-        
-        <form id="contact-form" action="/search/date" method="POST" role="form">
-
+  <div class="row">
+    <h1> REPORTS</h1>
+  </div>
+   <div class="row">
+  <div class="col-lg-8 col-lg-offset-2">
+     <form id="contact-form" action="/search/date" method="POST" role="form">
         <div class="messages"></div>
-
         <div class="controls">
-
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
@@ -25,19 +21,24 @@
                   <input type="date" name="endDate" max="3000-12-31"  min="1000-01-01" class="form-control">
               </div>
             </div>
-          </div>                                    
+          </div>  
+          <div class="row">  
+            <div class="col-md-12">
+              <div class="form-group">                              
                 <select name="printer" class="form-control form-control-lg">
-                        <option value="false">=== NONE ===</option>
-                    {{#each listPrinter}}
-
-                        <option value= {{this._id}}>{{this.printer}}</option>
-                    {{/each}}
+                        <option value="">=== PRINTER ===</option>
+                        {{#each listPrinter}}
+                           <option value= {{this._id}}>{{this.printer}}</option>
+                        {{/each}}
                 </select>
-           
-            <div class="col-md-6">
+                </div>
+            </div>
+           </div> 
+           <div class="row">
+            <div class="col-md-12">
               <div class="form-group">
-                <label for="form_lastname">Interface *</label>
-                <select name="interface" class="form-control form-control-lg">
+               <select name="interface" class="form-control form-control-lg">
+                    <option value="">=== INTERFACE ===</option>
                     <option value="Lan">Lan</option>
                     <option value="USB">USB</option>
                     <option value="WIFI">WIFI</option>
@@ -50,10 +51,10 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
               <div class="form-group">
-                <label for="form_email">Device *</label>
-                    <select name="device" class="form-control form-control-lg">
+                     <select name="device" class="form-control form-control-lg">
+                        <option value="">=== DEVICE ===</option>
                         <option value="Windows">Windows</option>
                         <option value="Mac">Mac</option>
                         <option value="iOS">iOS</option>
@@ -63,11 +64,12 @@
                 <div class="help-block with-errors"></div>
               </div>
             </div>
-            <div class="col-md-6">
+          </div> 
+          <div class="row">         
+            <div class="col-md-12">
               <div class="form-group">
-                <label for="form_phone">POS</label>
-                <select name="pos" class="form-control form-control-lg">
-                    <option value="None">None</option>
+                    <select name="pos" class="form-control form-control-lg">
+                    <option value="">=== POS ===</option>
                     <option value="Square">Square</option>
                     <option value="Uber Eats">Uber Eats</option>
                     <option value="Touch Bistro">Touch Bistro</option>
@@ -97,27 +99,26 @@
                 <div class="help-block with-errors"></div>
               </div>
             </div>
-          </div>
+          </div>  
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
               <input type="submit" class="btn btn-success btn-send" value="Search">
             </div>
           </div>
-         
         </div>
-
-        </form>
-
-      </div>
-
-    </div>
-
+    </form>
   </div>
+</div>
+
   <br>
   <br>
 <hr>
-
+<!-- ,-->
 <table id="customers" class="col-lg-8 col-lg-offset-2">
+  <div class="col-md-12">{{#each infArray}}
+                          {{this}}
+                          {{/each}}
+  </div>
     <tr>
         <h2>
             <th>DATE</th>
@@ -127,10 +128,8 @@
             <th>DEVICE</th>
             <th>POS</th>
             <th>OBSERVATION</th>
-            
-        </h2>
+         </h2>
     </tr>
-
     {{#each callLog}}
         <tr>  
             <th>{{this.createdAt}}</th>
