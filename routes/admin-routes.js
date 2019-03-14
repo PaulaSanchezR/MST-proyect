@@ -85,7 +85,12 @@ adminRouter.get('/reports', (req,res,next)=>{
 //db.posts.find({"created_on": {"$gte": start, "$lt": end}})
 adminRouter.post('/search/date' , (req,res,next) =>{
   const starDate1= new Date(req.body.starDate) || null;
+    starDate1.setDate(starDate1.getDate() + 1 )
+
+  console.log("star date=======>>" , starDate1);
   const endDate2= new Date(req.body.endDate) || null;
+  endDate2.setDate(endDate2.getDate() + 1  )
+  console.log("enddate2========" , endDate2.toISOString());
   const interface= req.body.interface || null;
   const device =req.body.device || null;
   const pos    =req.body.pos || null;
@@ -106,13 +111,55 @@ adminRouter.post('/search/date' , (req,res,next) =>{
           }) 
           .catch(error => next(err))
       }else {*/
-        Calls.find({$or: [{device:device}, {printer:printer},{pos:pos},{interface:interface},{createdAt:{"$gte": starDate1.toISOString() ,"$lt" : endDate2.toISOString()}}]})
-        //Calls.find({:printer, createdAt:{"$gte": starDate1.toISOString() ,"$lt" : endDate2.toISOString()}})
+        // Calls.find({$or: [{device:device}, {printer:printer},{pos:pos},{interface:interface},{createdAt:{"$gte": starDate1.toISOString() ,"$lt" : endDate2.toISOString()}}]})
+        Calls.find({createdAt:{"$gte": starDate1.toISOString() ,"$lt" : endDate2.toISOString()}})
           .populate('representative')
           .populate('printer')
           .then(callLog =>{
-            console.log("array==, ", infArray);
-            //console.log("with printer ===", callLog);
+          
+            const filter = {};
+            if (printer !== null){
+              filter.printer = printer;
+            }
+            if (interface !== null){
+              filter.interface = interface;
+            }
+            if (pos !== null){
+              filter.pos = pos;
+            }
+            if (device !== null){
+              filter.device = device;
+            }
+            function isEmpty(obj) {
+              for(var key in obj) {
+                  if(obj.hasOwnProperty(key))
+                      return false;
+              }
+              return true;
+          }
+          const objCheck = isEmpty(filter)
+
+            if(!objCheck){
+            callLog = callLog.filter(item => {
+              for (let key in filter) {
+                if (item[key] === undefined || item[key] != filter[key] )
+                  // console.log('1')
+                  // if(item[key]._id){
+                  //   console.log('2')
+                  //   if ((item[key]._id).toString() !== (filter[key]).toString() ){
+                  //     return false;
+                  //   }
+                  //   return true;
+                  // } 
+                  return false;
+
+                
+              }
+              return true;
+
+            }); 
+           }
+
               res.render('admin/searchReport', {callLog, listPrinter,infArray})
           }) 
           //,interface,device,pos,endDate2
