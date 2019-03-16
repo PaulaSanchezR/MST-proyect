@@ -1,0 +1,26 @@
+
+
+  <div class="col-md-12 "><h1>PRINTERS</h1></div>
+  <br><br>
+  <hr class="colorgraph">
+<div class="container">  
+  <div class="col-md-12"><a href="/printer/addForm"><h4>Add New Printer</h4></a></div>
+    <table id="table"  class="col-lg-12  table table-striped">
+      <thead>
+        <tr>
+          <th><h2>Printer</h2></th>
+          <th><h2>Description</h2></th>
+          <th><h2>Edit</h2></th>
+        </tr>
+      </thead>
+    {{#each listPrinter}}
+      <tr>
+        <th>{{this.printer}}</th>
+        <th>{{this.description}}</th>
+          <form action ="/editPrinter/{{this._id}}" method="POST">  
+        <th><button type="submit">Edit</button></th>
+      </form>
+      </tr>
+    {{/each}}
+    </table>
+</div>

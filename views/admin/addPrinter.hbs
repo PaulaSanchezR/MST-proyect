@@ -1,0 +1,52 @@
+
+  <div class="col-md-12 "><h1>
+    {{#if findPrinter}}
+      EDIT Printers 
+    {{else}}
+      NEW Printer
+    {{/if}}
+  </h1></div>
+  <br><br><br>
+  <hr class="colorgraph">
+<div class="container">  
+<div class="row" style="margin-top:20px">
+    <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+     
+	  	<form role="form" action={{#if findPrinter}}"/printer/edit"{{else}}"/printer/add" {{/if}} method="POST">
+    <!-- --> <!--  -->
+			<fieldset>
+				 <div class="col-md-12">
+              <div class="form-group">
+                <label for="form_privilage">Printer</label>
+                <input type="text" name="printer" id="email" class="form-control input-lg" value="{{#if findPrinter}}{{findPrinter.printer}}{{/if}}">
+            </div>
+          </div>
+      	 <div class="col-md-12">
+              <div class="form-group">
+                <label for="form_activate">Description</label>
+                <input type="text" name="description" id="email" class="form-control input-lg" value="{{#if findPrinter}}{{findPrinter.description}}{{/if}}">
+
+              </div>
+          </div>
+        {{findprinter._id}}
+        	<div class="col-md-12 ">
+             {{> flashMessage}} 
+             {{!-- this the name of the partial file--}}
+             {{#if findPrinter}}
+              <input type="hidden" name="id" value="{{findPrinter._id}}">
+              <input type="submit" class="btn btn-lg btn-success btn-block" value="EDIT">
+             {{else}} 
+               <input type="submit" class="btn btn-lg btn-success btn-block" value="NEW">
+
+             {{/if}}
+					</div>
+				
+        {{#if message}}
+            <div class="error-message">{{ message }}</div>
+       {{/if}}
+			</fieldset>
+		</form>
+	</div>
+</div>
+
+</div>

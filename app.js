@@ -64,7 +64,15 @@ hbs.registerPartials(__dirname + '/views/partials');
 // =============== default value for title local
 app.locals.title = 'MST-APP';
 
-
+//================= HELPER ==
+// parameter equal 
+hbs.registerHelper('if_eq', function(a, b, opts) {
+  if (a == b) {
+      return opts.fn(this);
+  } else {
+      return opts.inverse(this);
+  }
+});
 
 
 
@@ -93,6 +101,7 @@ app.use('/', index);
 app.use('/', require('./routes/auth-routes'));
 app.use('/', require('./routes/call-routes'));
 app.use('/', require('./routes/admin-routes'));
+app.use('/', require('./routes/printer-routes'))
      // another way to create the routes
 //const callRoutes = require("./routes/call-routes");
 //app.use('/' , callRoutes);

@@ -10,6 +10,7 @@ a {
 
 
 
+
 #customers {
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
@@ -21,15 +22,14 @@ a {
   padding: 8px;
 }
 
-#customers tr:nth-child(even){background-color: #f2f2f2;}
+#table tr:nth-child(even){background-color: #f2f2f2;}
 
-#customers tr:hover {background-color: rgb(126, 193, 219);}
+#table tr:hover {background-color: rgb(126, 193, 219);}
 
 #customers th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  
 }
 
 select{
@@ -234,6 +234,7 @@ li,ul{
 
 #navigation {
   padding: 0;
+  height: 100%;
 }
 
 .display-table {

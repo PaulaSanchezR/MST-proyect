@@ -79,45 +79,41 @@ adminRouter.get('/reports', (req,res,next)=>{
   })
   .catch(err => console.log("the user are not listed"));
 })
-
-
-
-//db.posts.find({"created_on": {"$gte": start, "$lt": end}})
 adminRouter.post('/search/date' , (req,res,next) =>{
   const starDate1= new Date(req.body.starDate) || null;
-    starDate1.setDate(starDate1.getDate() + 1 )
+
+   function addMonth(month){
+     console.log("=== month===", month.length)
+    let realMonth= month;
+      if(month.toString().length == 1){
+        realMonth = `0${month}`;
+      }
+    return realMonth; 
+  }
+  const dateValue1= `${starDate1.getFullYear()}-${addMonth(starDate1.getMonth()+1)}-${addMonth(starDate1.getDate())}`;
+   // starDate1.setDate(starDate1.getDate() + 1 )
 
   console.log("star date=======>>" , starDate1);
   const endDate2= new Date(req.body.endDate) || null;
-  endDate2.setDate(endDate2.getDate() + 1  )
-  console.log("enddate2========" , endDate2.toISOString());
+  const dateValue2= `${endDate2.getFullYear()}-${addMonth(endDate2.getMonth()+1)}-${addMonth(endDate2.getDate())}`;
+ // endDate2.setDate(endDate2.getDate() + 1  )
+  console.log("enddate2========" , endDate2);
   const interface= req.body.interface || null;
   const device =req.body.device || null;
   const pos    =req.body.pos || null;
   const printer= req.body.printer || null;
-  const infArray=[starDate1,endDate2,interface,device,pos,printer];
-  //console.log(" req.body.starDate======", starDate1.toISOString() )
-  console.log("search printer===",printer);
+  const infArray=[dateValue1,dateValue2,printer,interface,device,pos];
+
   Printer.find()
   .then(listPrinter => {
-    // console.log("printer ===",listPrinter);
-     
-      /*if(printer === 'false')
-      {
-        Calls.find({createdAt:{"$gte": starDate1.toISOString() ,"$lt" : endDate2.toISOString()}})
-          .then(callLog =>{
-              //console.log("calls ===", callLog);
-              res.render('admin/searchReport', {callLog, listPrinter})
-          }) 
-          .catch(error => next(err))
-      }else {*/
+  
         // Calls.find({$or: [{device:device}, {printer:printer},{pos:pos},{interface:interface},{createdAt:{"$gte": starDate1.toISOString() ,"$lt" : endDate2.toISOString()}}]})
         Calls.find({createdAt:{"$gte": starDate1.toISOString() ,"$lt" : endDate2.toISOString()}})
           .populate('representative')
           .populate('printer')
           .then(callLog =>{
-          
             const filter = {};
+          
             if (printer !== null){
               filter.printer = printer;
             }
@@ -130,45 +126,27 @@ adminRouter.post('/search/date' , (req,res,next) =>{
             if (device !== null){
               filter.device = device;
             }
-            function isEmpty(obj) {
-              for(var key in obj) {
-                  if(obj.hasOwnProperty(key))
-                      return false;
-              }
-              return true;
-          }
-          const objCheck = isEmpty(filter)
-
-            if(!objCheck){
+            console.log("search printer===",filter.printer);
             callLog = callLog.filter(item => {
               for (let key in filter) {
-                if (item[key] === undefined || item[key] != filter[key] )
-                  // console.log('1')
-                  // if(item[key]._id){
-                  //   console.log('2')
-                  //   if ((item[key]._id).toString() !== (filter[key]).toString() ){
-                  //     return false;
-                  //   }
-                  //   return true;
-                  // } 
-                  return false;
-
-                
-              }
+                              // console.log('OUTSITE ......item=== ', item[key], '   filter===' , filter[key] )
+                if(item[key]._id){
+                  // console.log('INSIDE ......item  ', item[key]._id, '====', ' filter' , filter[key] )
+                  if(item[key]._id.toString() !== filter[key].toString()){
+                    console.log(" RETURN FALSE")
+                        return false;
+                  }
+                }else if(item[key] === undefined || item[key] != filter[key] )
+                    return false;
+                }
               return true;
 
             }); 
-           }
-
               res.render('admin/searchReport', {callLog, listPrinter,infArray})
           }) 
-          //,interface,device,pos,endDate2
-          .catch(err => next(err))
-      //}
-  })
+        .catch(err => next(err))
+ })
   .catch()
- 
-
 })
 
 module.exports = adminRouter;
